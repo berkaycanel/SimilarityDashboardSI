@@ -25,7 +25,6 @@ def get_all_domains():
 
     try:
         response = requests.get(ES_URL + '/domain_crawler/_search', headers=headers, data=payload)
-        st.write(response)
         response.raise_for_status()
         json_data = response.json()
         domains = [hit['_source']['domain'] for hit in json_data['hits']['hits']]
