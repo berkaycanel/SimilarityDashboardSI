@@ -4,7 +4,7 @@ import os
 import streamlit as st
 
 ES_URL = st.secrets["ES_URL"]
-
+st.write(ES_URL)
 def get_all_domains():
     payload = json.dumps({
         "size": 34000, 
