@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import streamlit as st
 
 ES_URL = st.secrets["ES_URL"]
 
