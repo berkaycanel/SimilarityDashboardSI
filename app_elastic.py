@@ -94,6 +94,24 @@ def clean_matched_values(values):
     cleaned_values = [re.sub(r'</?em>', '', v) for v in values] 
     return cleaned_values
 
+def convert_to_list_format(text):
+    text = re.sub(r'<.*?>', '', text)
+    
+    tags = text.split(",")
+    
+    tags = [tag.strip() for tag in tags if tag.strip()]
+    
+    return ', '.join(tags)
+
+@st.cache_data
+def convert_df_to_csv(df):
+    return df.to_csv(index=False).encode('utf-8')
+
+def strip_html_tags(text):
+    clean = re.compile('<.*?>')
+    cleaned_text = re.sub(clean, '', text) if isinstance(text, str) else text
+    return cleaned_text.replace("Show Tags", "").strip()
+
 def display_domain_info(domain):
     input_data = es.get_domain_tags_new(domain)
     
@@ -187,6 +205,22 @@ def display_domain_info(domain):
 
     st.subheader(f"Similarity Results for Domain: {domain}")
     st.write(similarity_df.to_html(escape=False, index=False), unsafe_allow_html=True)
+
+
+    download_df = similarity_df.copy()
+    download_df['Domain'] = download_df['Domain'].apply(strip_html_tags)
+    download_df['Matched Refined GPT Tags'] = download_df['Matched Refined GPT Tags'].apply(lambda x: convert_to_list_format(strip_html_tags(x)))
+    download_df['Matched CB Tags'] = download_df['Matched CB Tags'].apply(lambda x: convert_to_list_format(strip_html_tags(x)))
+    download_df['Matched LI Tags'] = download_df['Matched LI Tags'].apply(lambda x: convert_to_list_format(strip_html_tags(x)))
+    download_df['Matched WP Tags'] = download_df['Matched WP Tags'].apply(lambda x: convert_to_list_format(strip_html_tags(x)))
+    
+    similarity_csv = convert_df_to_csv(download_df)
+    st.download_button(
+        label="Download Similarity Data as CSV",
+        data=similarity_csv,
+        file_name=f'similarity_data_{domain}.csv',
+        mime='text/csv',
+    )
 
 @st.cache_data
 def get_domain_list():
