@@ -94,7 +94,7 @@ def get_domain_tags_new(domain):
 def get_related_domains_new(refined_gpt_tags=None, cb_tags=None, li_tags=None, wp_tags=None, domain=None, funding_stage=None, employees=None, total_funding_amount=None, boosts=None):
     if boosts is None:
         boosts = {
-            'refined_gpt_tags': 3.0,
+            'refined_gpt_tags': 1.5,
             'cb_tags': 2.5,
             'li_tags': 3.0,
             'funding_stage': 4.5,
