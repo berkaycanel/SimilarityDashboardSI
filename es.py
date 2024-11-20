@@ -98,7 +98,7 @@ def get_related_domains_new(refined_gpt_tags=None, cb_tags=None, li_tags=None, w
             'cb_tags': 2.5,
             'li_tags': 3.0,
             'funding_stage': 3.0,
-            'employees': 2.0,
+            'employees': 3.0,
             'total_funding_amount': 3.0,
             'wp_tags': 6.0  
         }
