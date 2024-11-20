@@ -97,10 +97,10 @@ def get_related_domains_new(refined_gpt_tags=None, cb_tags=None, li_tags=None, w
             'refined_gpt_tags': 3.0,
             'cb_tags': 2.5,
             'li_tags': 3.0,
-            'funding_stage': 3.0,
-            'employees': 3.0,
-            'total_funding_amount': 3.0,
-            'wp_tags': 6.0  
+            'funding_stage': 4.5,
+            'employees': 4.5,
+            'total_funding_amount': 4.5,
+            'wp_tags': 5.0  
         }
 
     tags_obj = []
