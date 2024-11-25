@@ -7,10 +7,13 @@ ES_URL = st.secrets["ES_URL"]
 
 def get_all_domains():
     payload = json.dumps({
-        "size": 34000, 
+        "size": 34000,
         "_source": ["domain"],
         "query": {
             "bool": {
+                "must_not": [
+                    {"term": {"duplicate": True}}
+                ],
                 "should": [
                     {"exists": {"field": "refined_gpt_tags"}},
                     {"exists": {"field": "wp_tags"}}
@@ -152,6 +155,7 @@ def get_related_domains_new(refined_gpt_tags=None, cb_tags=None, li_tags=None, w
         'query': {
             'bool': {
                 'must_not': [
+                    {"term": {"duplicate": True}},  # Exclude duplicates
                     {
                         'term': {
                             'domain.keyword': domain,
